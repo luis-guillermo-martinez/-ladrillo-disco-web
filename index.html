@@ -797,19 +797,19 @@
         // DATA: RRPPs (12 RRPPs con WhatsApp)
         // =========================================
         const rrpps = [
-            { name: "Ramón Zapata", number: "5492302622553", role: "RRPP Senior" },
-            { name: "Luis Martínez", number: "5492302576867", role: "EL UNICO" },
-            { name: "Sofía Rodríguez", number: "5491123456791", role: "Zona Sur" },
-            { name: "Mateo González", number: "5491123456792", role: "Zona Oeste" },
-            { name: "Valentina López", number: "5491123456793", role: "Zona Centro" },
-            { name: "Tomás Fernández", number: "5491123456794", role: "Capital" },
-            { name: "Martina Sánchez", number: "5491123456795", role: "GBA" },
-            { name: "Benjamín Torres", number: "5491123456796", role: "Interior" },
-            { name: "Emilia Ramírez", number: "5491123456797", role: "Eventos" },
-            { name: "Santiago Cruz", number: "5491123456798", role: "VIP" },
-            { name: "Isabella Morales", number: "5491123456799", role: "Mesas" },
-            { name: "Maximiliano Ruiz", number: "5491123456800", role: "General" }
-        ];
+    { name: "Ramón Zapata", number: "5492302622553", role: "RRPP Senior", photo: "fotos/reymon.jpg" },
+    { name: "Luis Martínez", number: "5491123456790", role: "El mejor", photo: "fotos/reymon.jpg" },
+    { name: "Sofía Rodríguez", number: "5491123456791", role: "Zona Sur", photo: "fotos/sofia.jpg" },
+    { name: "Mateo González", number: "5491123456792", role: "Zona Oeste", photo: "fotos/mateo.jpg" },
+    { name: "Valentina López", number: "5491123456793", role: "Zona Centro", photo: "fotos/valentina.jpg" },
+    { name: "Tomás Fernández", number: "5491123456794", role: "Capital", photo: "fotos/tomas.jpg" },
+    { name: "Martina Sánchez", number: "5491123456795", role: "GBA", photo: "fotos/martina.jpg" },
+    { name: "Benjamín Torres", number: "5491123456796", role: "Interior", photo: "fotos/benjamin.jpg" },
+    { name: "Emilia Ramírez", number: "5491123456797", role: "Eventos", photo: "fotos/emilia.jpg" },
+    { name: "Santiago Cruz", number: "5491123456798", role: "VIP", photo: "fotos/santiago.jpg" },
+    { name: "Isabella Morales", number: "5491123456799", role: "Mesas", photo: "fotos/isabella.jpg" },
+    { name: "Maximiliano Ruiz", number: "5491123456800", role: "General", photo: "fotos/maximiliano.jpg" }
+];
 
         // =========================================
         // RENDER RRPPs
@@ -820,7 +820,7 @@
             card.className = 'rrpp-card fade-up';
             card.style.transitionDelay = `${index * 0.05}s`;
             
-            const imageUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(rrpp.name)}&background=111111&color=d4ff00&size=400&bold=true`;
+            const imageUrl = rrpp.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(rrpp.name)}&background=111111&color=d4ff00&size=400&bold=true`;
             
             card.innerHTML = `
                 <a href="https://wa.me/${rrpp.number}" target="_blank" class="rrpp-card-link">
