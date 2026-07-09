@@ -823,7 +823,7 @@
             const imageUrl = rrpp.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(rrpp.name)}&background=111111&color=d4ff00&size=400&bold=true`;
             
             card.innerHTML = `
-                <a href="https://wa.me/${rrpp.number}" target="_blank" class="rrpp-card-link">
+                <a href="https://wa.me/${rrpp.number}?text=${encodeURIComponent('Hola ' + rrpp.name + ' 🎉 quisiera una ANTI 🎟️')}" target="_blank" class="rrpp-card-link">
                     <img src="${imageUrl}" alt="${rrpp.name}" class="rrpp-card-img">
                     <div class="rrpp-card-overlay">
                         <div class="rrpp-card-role">${rrpp.role}</div>
