@@ -300,355 +300,6 @@
             letter-spacing: -1px;
         }
 
-        .section-subtitle {
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 1rem auto 0;
-            font-size: 1.05rem;
-        }
-
-        /* =========================================
-           EVENTOS - PREVIEW (HOME)
-        ========================================= */
-        .events-preview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .event-mini {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.4s var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .event-mini::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--accent);
-            transform: scaleY(0);
-            transform-origin: bottom;
-            transition: transform 0.4s var(--transition);
-        }
-
-        .event-mini:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .event-mini:hover::before {
-            transform: scaleY(1);
-        }
-
-        .event-mini-date {
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-        }
-
-        .event-mini-name {
-            font-size: 1.5rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .event-mini-venue {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-
-        .event-mini-btn {
-            display: inline-block;
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .view-all-events {
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        /* =========================================
-           EVENTOS - FULL PAGE
-        ========================================= */
-        .events-grid {
-            display: grid;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .event-card {
-            display: grid;
-            grid-template-columns: 180px 1fr auto;
-            gap: 2rem;
-            align-items: center;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.4s var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .event-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(212, 255, 0, 0.05), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s var(--transition);
-        }
-
-        .event-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 15px 40px rgba(212, 255, 0, 0.15);
-        }
-
-        .event-card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .event-date-box {
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem 1rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .event-date-day {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--accent);
-            line-height: 1;
-            letter-spacing: -2px;
-        }
-
-        .event-date-month {
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        .event-date-year {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 0.25rem;
-        }
-
-        .event-info {
-            position: relative;
-            z-index: 1;
-        }
-
-        .event-status {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.8rem;
-        }
-
-        .status-available {
-            background: rgba(212, 255, 0, 0.15);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-
-        .status-few {
-            background: rgba(255, 165, 0, 0.15);
-            color: #ffa500;
-            border: 1px solid #ffa500;
-        }
-
-        .status-soldout {
-            background: rgba(255, 0, 85, 0.15);
-            color: var(--accent-alt);
-            border: 1px solid var(--accent-alt);
-        }
-
-        .event-name {
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            margin-bottom: 0.5rem;
-        }
-
-        .event-venue {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .event-lineup {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .event-dj-tag {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .event-card:hover .event-dj-tag {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .event-action {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.8rem;
-        }
-
-        .event-price {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            text-align: right;
-        }
-
-        .event-price small {
-            display: block;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-tickets {
-            padding: 0.8rem 1.8rem;
-            background: var(--accent);
-            color: var(--bg-primary);
-            border-radius: 50px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.85rem;
-            transition: all 0.3s var(--transition);
-            white-space: nowrap;
-        }
-
-        .btn-tickets:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(212, 255, 0, 0.5);
-        }
-
-        .btn-tickets.disabled {
-            background: var(--glass);
-            color: var(--text-secondary);
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        /* =========================================
-           PLAYLIST SECTION
-        ========================================= */
-        .playlist-section {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a1a1a 100%);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 4rem 3rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin: 4rem auto;
-            max-width: 1400px;
-        }
-
-        .playlist-section::before {
-            content: '🥷🏼';
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            font-size: 4rem;
-            opacity: 0.1;
-        }
-
-        .playlist-section::after {
-            content: '🥷🏼';
-            position: absolute;
-            bottom: 2rem;
-            left: 2rem;
-            font-size: 4rem;
-            opacity: 0.1;
-        }
-
-        .playlist-title {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        .playlist-subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .btn-playlist {
-            padding: 1rem 3rem;
-            background: var(--accent);
-            color: var(--bg-primary);
-            border-radius: 50px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 1rem;
-            transition: all 0.3s var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .btn-playlist:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 0 30px rgba(212, 255, 0, 0.5);
-        }
-
         /* =========================================
            RRPP MOSAIC GRID
         ========================================= */
@@ -763,6 +414,11 @@
             transform: scale(1);
         }
 
+        .rrpp-card-whatsapp:hover {
+            background: #25D366;
+            color: white;
+        }
+
         /* =========================================
            TEAM (DJs)
         ========================================= */
@@ -799,6 +455,10 @@
             color: rgba(255,255,255,0.1);
             position: relative;
             overflow: hidden;
+        }
+
+        .dj-card:hover .dj-img {
+            background: linear-gradient(45deg, #222, #333);
         }
 
         .dj-info {
@@ -859,35 +519,6 @@
             align-items: center;
             justify-content: center;
             color: var(--accent);
-        }
-
-        .local-time {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            margin-top: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .local-time .time-icon {
-            font-size: 1.5rem;
-        }
-
-        .local-time .time-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .local-time .time-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            font-variant-numeric: tabular-nums;
         }
 
         .form-grid {
@@ -999,27 +630,6 @@
             .rrpp-card-name { font-size: 1.1rem; }
             .rrpp-card-role { font-size: 0.7rem; }
             .rrpp-card-whatsapp { width: 35px; height: 35px; }
-
-            .event-card {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                text-align: center;
-            }
-
-            .event-date-box {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                padding: 1rem;
-            }
-
-            .event-date-day { font-size: 2rem; }
-            .event-action { align-items: center; }
-            .event-name { font-size: 1.4rem; }
-            .event-lineup { justify-content: center; }
-            .event-price { text-align: center; }
-
-            .playlist-section { padding: 3rem 1.5rem; }
         }
     </style>
 </head>
@@ -1066,49 +676,15 @@
                 </div>
             </div>
 
-            <!-- PRÓXIMOS EVENTOS PREVIEW -->
-            <section id="events-preview">
-                <div class="section-header fade-up">
-                    <span class="section-tag">Próximos Eventos</span>
-                    <h2 class="section-title">Próximos Eventos</h2>
-                    <p class="section-subtitle">Somos el primer club nocturno en crear eventos en los que sólo suena RKT. Contamos con el aval de los máximos exponentes del género y con una comunidad que nos acompaña a todas partes. Los artistas más destacados de la industria forman parte de nuestro equipo.</p>
-                </div>
-                <div class="events-preview" id="eventsPreview"></div>
-                <div class="view-all-events fade-up">
-                    <a href="#" class="btn btn-secondary" data-page="fechas">Ver Todas las Fechas →</a>
-                </div>
-            </section>
-
             <!-- RRPP MOSAIC Section -->
             <section id="rrpp">
                 <div class="section-header fade-up">
                     <span class="section-tag">RRPP Oficiales</span>
                     <h2 class="section-title">Nuestro Equipo</h2>
                 </div>
-                <div class="rrpp-grid-mosaic"></div>
-            </section>
-
-            <!-- PLAYLIST SECTION -->
-            <section id="playlist">
-                <div class="playlist-section fade-up">
-                    <h2 class="playlist-title">Las mejores playlists de RKT 🥷🏼</h2>
-                    <p class="playlist-subtitle">Escuchá los temas que suenan en todas nuestras noches</p>
-                    <a href="https://open.spotify.com" target="_blank" class="btn-playlist">
-                        ▶ ESCUCHAR
-                    </a>
+                <div class="rrpp-grid-mosaic">
+                    <!-- RRPP Cards generadas dinámicamente -->
                 </div>
-            </section>
-        </div>
-
-        <!-- PAGE: FECHAS -->
-        <div id="fechas" class="page">
-            <section style="padding-top: 8rem;">
-                <div class="section-header fade-up">
-                    <span class="section-tag">Agenda</span>
-                    <h2 class="section-title">Próximos Eventos</h2>
-                    <p class="section-subtitle">Somos el primer club nocturno en crear eventos en los que sólo suena RKT. Contamos con el aval de los máximos exponentes del género y con una comunidad que nos acompaña a todas partes. Los artistas más destacados de la industria forman parte de nuestro equipo.</p>
-                </div>
-                <div class="events-grid" id="eventsGrid"></div>
             </section>
         </div>
 
@@ -1119,7 +695,9 @@
                     <span class="section-tag">El Equipo</span>
                     <h2 class="section-title">Nuestros DJS</h2>
                 </div>
-                <div class="djs-grid"></div>
+                <div class="djs-grid">
+                    <!-- DJ Cards generadas dinámicamente -->
+                </div>
             </section>
         </div>
 
@@ -1128,7 +706,7 @@
             <section style="padding-top: 8rem;">
                 <div class="section-header fade-up">
                     <span class="section-tag">Hablemos</span>
-                    <h2 class="section-title">Traé a Ladrillo a tu ciudad</h2>
+                    <h2 class="section-title">Traé a El Caserío a tu ciudad</h2>
                 </div>
                 <div class="contact-wrapper fade-up">
                     <div class="contact-info">
@@ -1147,15 +725,6 @@
                             <div>
                                 <strong>Locación</strong><br>
                                 Realicó, La Pampa, Argentina
-                            </div>
-                        </div>
-
-                        <!-- Reloj Hora Local -->
-                        <div class="local-time">
-                            <div class="time-icon">🕐</div>
-                            <div>
-                                <div class="time-label">Hora local</div>
-                                <div class="time-value" id="localTime">--:--:--</div>
                             </div>
                         </div>
                     </div>
@@ -1225,220 +794,51 @@
 
     <script>
         // =========================================
-        // DATA: EVENTOS
-        // =========================================
-        const eventos = [
-            {
-                name: "Ladrillo - Edición Patagonia",
-                date: "2026-07-18",
-                venue: "Ladrillo Disco",
-                city: "Realicó, La Pampa",
-                lineup: ["DJ Feed", "Tibbas", "Eze Greco", "Gnabry"],
-                price: "$8.000",
-                priceLabel: "Anticipada",
-                status: "available",
-                ticketUrl: "#"
-            },
-            {
-                name: "RKT Night Vol. 2",
-                date: "2026-07-25",
-                venue: "Club Mandarine",
-                city: "Santa Rosa",
-                lineup: ["Adri Fuentes", "Sossa", "Tomi Remix"],
-                price: "$10.000",
-                priceLabel: "General",
-                status: "few",
-                ticketUrl: "#"
-            },
-            {
-                name: "Los Clásicos Nunca Mueren",
-                date: "2026-08-01",
-                venue: "Teatro Vorterix",
-                city: "Buenos Aires",
-                lineup: ["Dura DJ", "Matt Sebastian", "Ventu DJ", "Los anormales"],
-                price: "$12.000",
-                priceLabel: "Platea",
-                status: "available",
-                ticketUrl: "#"
-            },
-            {
-                name: "Noche de Barrio",
-                date: "2026-08-08",
-                venue: "Nikito Bar",
-                city: "General Pico",
-                lineup: ["Juanma Girat", "Juana Vincent", "Eze Remix"],
-                price: "$7.000",
-                priceLabel: "Anticipada",
-                status: "available",
-                ticketUrl: "#"
-            },
-            {
-                name: "El Gigante - 100% Único",
-                date: "2026-08-15",
-                venue: "Ladrillo Disco",
-                city: "Realicó, La Pampa",
-                lineup: ["DJ Feed", "Tibbas", "Gnabry", "Sossa", "Adri Fuentes"],
-                price: "$15.000",
-                priceLabel: "Campo",
-                status: "few",
-                ticketUrl: "#"
-            },
-            {
-                name: "RKT Festival 2026",
-                date: "2026-06-20",
-                venue: "Hipódromo de Palermo",
-                city: "Buenos Aires",
-                lineup: ["Todos los DJS"],
-                price: "$20.000",
-                priceLabel: "General",
-                status: "soldout",
-                ticketUrl: "#"
-            }
-        ];
-
-        // =========================================
-        // HELPERS: FECHAS
-        // =========================================
-        const meses = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
-        const mesesLargos = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
-        function formatDate(dateStr) {
-            const d = new Date(dateStr + 'T00:00:00');
-            return {
-                day: d.getDate(),
-                month: meses[d.getMonth()],
-                monthLong: mesesLargos[d.getMonth()],
-                year: d.getFullYear(),
-                weekday: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'][d.getDay()]
-            };
-        }
-
-        function getStatusInfo(status) {
-            const statuses = {
-                available: { class: 'status-available', label: '🟢 Disponible' },
-                few: { class: 'status-few', label: '🟠 Pocas Entradas' },
-                soldout: { class: 'status-soldout', label: '🔴 Agotado' }
-            };
-            return statuses[status] || statuses.available;
-        }
-
-        // =========================================
-        // RENDER: EVENTOS PREVIEW (HOME)
-        // =========================================
-        function renderEventsPreview() {
-            const container = document.getElementById('eventsPreview');
-            const upcoming = eventos
-                .filter(e => e.status !== 'soldout')
-                .sort((a, b) => new Date(a.date) - new Date(b.date))
-                .slice(0, 3);
-
-            upcoming.forEach((event, index) => {
-                const date = formatDate(event.date);
-                const card = document.createElement('div');
-                card.className = 'event-mini fade-up';
-                card.style.transitionDelay = `${index * 0.1}s`;
-                card.innerHTML = `
-                    <div class="event-mini-date">${date.weekday} ${date.day} ${date.monthLong}</div>
-                    <div class="event-mini-name">${event.name}</div>
-                    <div class="event-mini-venue">📍 ${event.venue} • ${event.city}</div>
-                    <a href="#" class="event-mini-btn" data-page="fechas">Ver detalles →</a>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // =========================================
-        // RENDER: EVENTOS FULL (PÁGINA FECHAS)
-        // =========================================
-        function renderEventsFull() {
-            const container = document.getElementById('eventsGrid');
-            const sorted = [...eventos].sort((a, b) => new Date(a.date) - new Date(b.date));
-
-            sorted.forEach((event, index) => {
-                const date = formatDate(event.date);
-                const statusInfo = getStatusInfo(event.status);
-                const isSoldout = event.status === 'soldout';
-
-                const card = document.createElement('div');
-                card.className = 'event-card fade-up';
-                card.style.transitionDelay = `${index * 0.08}s`;
-                card.innerHTML = `
-                    <div class="event-date-box">
-                        <div class="event-date-day">${date.day}</div>
-                        <div class="event-date-month">${date.month}</div>
-                        <div class="event-date-year">${date.year}</div>
-                    </div>
-                    <div class="event-info">
-                        <span class="event-status ${statusInfo.class}">${statusInfo.label}</span>
-                        <h3 class="event-name">${event.name}</h3>
-                        <div class="event-venue">📍 ${event.venue} • ${event.city}</div>
-                        <div class="event-lineup">
-                            ${event.lineup.map(dj => `<span class="event-dj-tag">${dj}</span>`).join('')}
-                        </div>
-                    </div>
-                    <div class="event-action">
-                        <div class="event-price">
-                            ${event.price}
-                            <small>${event.priceLabel}</small>
-                        </div>
-                        <a href="${event.ticketUrl}" class="btn-tickets ${isSoldout ? 'disabled' : ''}">
-                            ${isSoldout ? 'Agotado' : 'Comprar Entradas'}
-                        </a>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // =========================================
-        // DATA: RRPPs
+        // DATA: RRPPs (12 RRPPs con WhatsApp)
         // =========================================
         const rrpps = [
-            { name: "Ramón Zapata", number: "5491123456789", role: "RRPP Senior", photo: "fotos/reymon.jpg" },
-            { name: "Lucas Martínez", number: "5491123456790", role: "Zona Norte" },
-            { name: "Sofía Rodríguez", number: "5491123456791", role: "Zona Sur" },
-            { name: "Mateo González", number: "5491123456792", role: "Zona Oeste" },
-            { name: "Valentina López", number: "5491123456793", role: "Zona Centro" },
-            { name: "Tomás Fernández", number: "5491123456794", role: "Capital" },
-            { name: "Martina Sánchez", number: "5491123456795", role: "GBA" },
-            { name: "Benjamín Torres", number: "5491123456796", role: "Interior" },
-            { name: "Emilia Ramírez", number: "5491123456797", role: "Eventos" },
-            { name: "Santiago Cruz", number: "5491123456798", role: "VIP" },
-            { name: "Isabella Morales", number: "5491123456799", role: "Mesas" },
-            { name: "Maximiliano Ruiz", number: "5491123456800", role: "General" }
-        ];
+    { name: "Ramón Zapata", number: "5492302622553", role: "RRPP Senior", photo: "fotos/reymon.jpg" },
+    { name: "Luis Martínez", number: "5491123456790", role: "El mejor", photo: "fotos/reymon.jpg" },
+    { name: "Sofía Rodríguez", number: "5491123456791", role: "Zona Sur", photo: "fotos/sofia.jpg" },
+    { name: "Mateo González", number: "5491123456792", role: "Zona Oeste", photo: "fotos/mateo.jpg" },
+    { name: "Valentina López", number: "5491123456793", role: "Zona Centro", photo: "fotos/valentina.jpg" },
+    { name: "Tomás Fernández", number: "5491123456794", role: "Capital", photo: "fotos/tomas.jpg" },
+    { name: "Martina Sánchez", number: "5491123456795", role: "GBA", photo: "fotos/martina.jpg" },
+    { name: "Benjamín Torres", number: "5491123456796", role: "Interior", photo: "fotos/benjamin.jpg" },
+    { name: "Emilia Ramírez", number: "5491123456797", role: "Eventos", photo: "fotos/emilia.jpg" },
+    { name: "Santiago Cruz", number: "5491123456798", role: "VIP", photo: "fotos/santiago.jpg" },
+    { name: "Isabella Morales", number: "5491123456799", role: "Mesas", photo: "fotos/isabella.jpg" },
+    { name: "Maximiliano Ruiz", number: "5491123456800", role: "General", photo: "fotos/maximiliano.jpg" }
+];
 
         // =========================================
-        // RENDER: RRPPs
+        // RENDER RRPPs
         // =========================================
-        function renderRRPPs() {
-            const rrppGrid = document.querySelector('.rrpp-grid-mosaic');
-            rrpps.forEach((rrpp, index) => {
-                const card = document.createElement('div');
-                card.className = 'rrpp-card fade-up';
-                card.style.transitionDelay = `${index * 0.05}s`;
-                
-                const imageUrl = rrpp.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(rrpp.name)}&background=111111&color=d4ff00&size=400&bold=true`;
-                const waMessage = encodeURIComponent(`Hola ${rrpp.name} quisiera una ANTI`);
-                
-                card.innerHTML = `
-                    <a href="https://wa.me/${rrpp.number}?text=${waMessage}" target="_blank" class="rrpp-card-link">
-                        <img src="${imageUrl}" alt="${rrpp.name}" class="rrpp-card-img">
-                        <div class="rrpp-card-overlay">
-                            <div class="rrpp-card-role">${rrpp.role}</div>
-                            <div class="rrpp-card-name">${rrpp.name}</div>
-                        </div>
-                        <div class="rrpp-card-whatsapp" title="Contactar por WhatsApp">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                            </svg>
-                        </div>
-                    </a>
-                `;
-                
-                rrppGrid.appendChild(card);
-            });
-        }
+        const rrppGrid = document.querySelector('.rrpp-grid-mosaic');
+        rrpps.forEach((rrpp, index) => {
+            const card = document.createElement('div');
+            card.className = 'rrpp-card fade-up';
+            card.style.transitionDelay = `${index * 0.05}s`;
+            
+            const imageUrl = rrpp.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(rrpp.name)}&background=111111&color=d4ff00&size=400&bold=true`;
+            
+            card.innerHTML = `
+                <a href="https://wa.me/${rrpp.number}?text=${encodeURIComponent('Hola ' + rrpp.name + ' 🎉 quisiera una ANTI 🎟️')}" target="_blank" class="rrpp-card-link">
+                    <img src="${imageUrl}" alt="${rrpp.name}" class="rrpp-card-img">
+                    <div class="rrpp-card-overlay">
+                        <div class="rrpp-card-role">${rrpp.role}</div>
+                        <div class="rrpp-card-name">${rrpp.name}</div>
+                    </div>
+                    <div class="rrpp-card-whatsapp" title="Contactar por WhatsApp">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                    </div>
+                </a>
+            `;
+            
+            rrppGrid.appendChild(card);
+        });
 
         // =========================================
         // DATA: DJs
@@ -1450,44 +850,23 @@
         ];
 
         // =========================================
-        // RENDER: DJs
+        // RENDER DJs
         // =========================================
-        function renderDJs() {
-            const djsGrid = document.querySelector('.djs-grid');
-            djs.forEach((dj, index) => {
-                const initials = dj.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-                const card = document.createElement('div');
-                card.className = 'dj-card fade-up';
-                card.style.transitionDelay = `${index * 0.05}s`;
-                card.innerHTML = `
-                    <div class="dj-img">${initials}</div>
-                    <div class="dj-info">
-                        <span class="dj-name">${dj}</span>
-                        <span class="dj-listeners">+${Math.floor(Math.random() * 900 + 100)}K</span>
-                    </div>
-                `;
-                djsGrid.appendChild(card);
-            });
-        }
-
-        // =========================================
-        // RELOJ HORA LOCAL (Argentina)
-        // =========================================
-        function updateLocalTime() {
-            const now = new Date();
-            const options = { 
-                timeZone: 'America/Argentina/Buenos_Aires',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            };
-            const timeStr = now.toLocaleTimeString('es-AR', options);
-            const timeElement = document.getElementById('localTime');
-            if (timeElement) {
-                timeElement.textContent = timeStr;
-            }
-        }
+        const djsGrid = document.querySelector('.djs-grid');
+        djs.forEach((dj, index) => {
+            const initials = dj.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            const card = document.createElement('div');
+            card.className = 'dj-card fade-up';
+            card.style.transitionDelay = `${index * 0.05}s`;
+            card.innerHTML = `
+                <div class="dj-img">${initials}</div>
+                <div class="dj-info">
+                    <span class="dj-name">${dj}</span>
+                    <span class="dj-listeners">+${Math.floor(Math.random() * 900 + 100)}K</span>
+                </div>
+            `;
+            djsGrid.appendChild(card);
+        });
 
         // =========================================
         // ROUTING (SPA)
@@ -1498,7 +877,7 @@
         function switchPage(pageId) {
             pages.forEach(page => {
                 page.classList.remove('active');
-                if (page.id === pageId) {
+                if (page.id === pageId || (pageId === 'fechas' && page.id === 'inicio')) {
                     page.classList.add('active');
                 }
             });
@@ -1584,16 +963,8 @@
             }, 1500);
         }
 
-        // =========================================
-        // INIT
-        // =========================================
-        renderEventsPreview();
-        renderEventsFull();
-        renderRRPPs();
-        renderDJs();
+        // Init
         observeElements();
-        updateLocalTime();
-        setInterval(updateLocalTime, 1000);
     </script>
 </body>
 </html>
