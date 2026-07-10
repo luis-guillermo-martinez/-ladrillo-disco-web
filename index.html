@@ -312,19 +312,23 @@
         ========================================= */
         .events-preview {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
         .event-mini {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1.5rem;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 1.5rem;
             transition: all 0.4s var(--transition);
             position: relative;
             overflow: hidden;
+            align-items: center;
         }
 
         .event-mini::before {
@@ -349,35 +353,60 @@
             transform: scaleY(1);
         }
 
+        .event-mini-image {
+            width: 100%;
+            aspect-ratio: 9/19;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .event-mini-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s var(--transition);
+        }
+
+        .event-mini:hover .event-mini-image img {
+            transform: scale(1.05);
+        }
+
+        .event-mini-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
         .event-mini-date {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--accent);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 0.5rem;
         }
 
         .event-mini-name {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 800;
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            line-height: 1.2;
         }
 
         .event-mini-venue {
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
+            font-size: 0.85rem;
         }
 
         .event-mini-btn {
             display: inline-block;
             color: var(--accent);
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-top: 0.5rem;
+            cursor: pointer;
         }
 
         .view-all-events {
@@ -396,7 +425,7 @@
 
         .event-card {
             display: grid;
-            grid-template-columns: 180px 1fr auto;
+            grid-template-columns: 200px 1fr auto;
             gap: 2rem;
             align-items: center;
             background: var(--bg-secondary);
@@ -406,6 +435,7 @@
             transition: all 0.4s var(--transition);
             position: relative;
             overflow: hidden;
+            scroll-margin-top: 100px;
         }
 
         .event-card::before {
@@ -427,37 +457,30 @@
             transform: translateX(100%);
         }
 
-        .event-date-box {
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
+        .event-card.highlight {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(212, 255, 0, 0.3);
+        }
+
+        .event-image {
+            width: 100%;
+            aspect-ratio: 9/19;
             border-radius: 12px;
-            padding: 1.5rem 1rem;
-            text-align: center;
+            overflow: hidden;
             position: relative;
             z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .event-date-day {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--accent);
-            line-height: 1;
-            letter-spacing: -2px;
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--transition);
         }
 
-        .event-date-month {
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        .event-date-year {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 0.25rem;
+        .event-card:hover .event-image img {
+            transform: scale(1.08);
         }
 
         .event-info {
@@ -492,6 +515,24 @@
             background: rgba(255, 0, 85, 0.15);
             color: var(--accent-alt);
             border: 1px solid var(--accent-alt);
+        }
+
+        .event-date-inline {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-date-inline .date-number {
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1;
         }
 
         .event-name {
@@ -1006,18 +1047,24 @@
                 text-align: center;
             }
 
-            .event-date-box {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                padding: 1rem;
+            .event-image {
+                max-width: 200px;
+                margin: 0 auto;
             }
 
-            .event-date-day { font-size: 2rem; }
             .event-action { align-items: center; }
             .event-name { font-size: 1.4rem; }
             .event-lineup { justify-content: center; }
             .event-price { text-align: center; }
+
+            .event-mini {
+                grid-template-columns: 100px 1fr;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .event-mini-name { font-size: 1rem; }
+            .event-mini-date { font-size: 0.7rem; }
 
             .playlist-section { padding: 3rem 1.5rem; }
         }
@@ -1229,15 +1276,16 @@
         // =========================================
         const eventos = [
             {
-                name: "Ladrillo - Edición Patagonia",
-                date: "2026-07-18",
+                name: "Ladrillo University Fest",
+                date: "2026-07-11",
                 venue: "Ladrillo Disco",
                 city: "Realicó, La Pampa",
-                lineup: ["DJ Feed", "Tibbas", "Eze Greco", "Gnabry"],
-                price: "$8.000",
+                lineup: ["Luis", "Lucas", "Mateo", "Reymon"],
+                price: "$8",
                 priceLabel: "Anticipada",
                 status: "available",
-                ticketUrl: "#"
+                ticketUrl: "#",
+                image: "eventos/university.jpeg"
             },
             {
                 name: "RKT Night Vol. 2",
@@ -1248,7 +1296,8 @@
                 price: "$10.000",
                 priceLabel: "General",
                 status: "few",
-                ticketUrl: "#"
+                ticketUrl: "#",
+                image: "eventos/rkt-night-2.jpg"
             },
             {
                 name: "Los Clásicos Nunca Mueren",
@@ -1259,7 +1308,8 @@
                 price: "$12.000",
                 priceLabel: "Platea",
                 status: "available",
-                ticketUrl: "#"
+                ticketUrl: "#",
+                image: "eventos/clasicos.jpg"
             },
             {
                 name: "Noche de Barrio",
@@ -1270,7 +1320,8 @@
                 price: "$7.000",
                 priceLabel: "Anticipada",
                 status: "available",
-                ticketUrl: "#"
+                ticketUrl: "#",
+                image: "eventos/noche-barrio.jpg"
             },
             {
                 name: "El Gigante - 100% Único",
@@ -1281,7 +1332,8 @@
                 price: "$15.000",
                 priceLabel: "Campo",
                 status: "few",
-                ticketUrl: "#"
+                ticketUrl: "#",
+                image: "eventos/gigante.jpg"
             },
             {
                 name: "RKT Festival 2026",
@@ -1292,7 +1344,8 @@
                 price: "$20.000",
                 priceLabel: "General",
                 status: "soldout",
-                ticketUrl: "#"
+                ticketUrl: "#",
+                image: "eventos/festival.jpg"
             }
         ];
 
@@ -1334,16 +1387,41 @@
 
             upcoming.forEach((event, index) => {
                 const date = formatDate(event.date);
+                const eventIndex = eventos.indexOf(event);
                 const card = document.createElement('div');
                 card.className = 'event-mini fade-up';
                 card.style.transitionDelay = `${index * 0.1}s`;
                 card.innerHTML = `
-                    <div class="event-mini-date">${date.weekday} ${date.day} ${date.monthLong}</div>
-                    <div class="event-mini-name">${event.name}</div>
-                    <div class="event-mini-venue">📍 ${event.venue} • ${event.city}</div>
-                    <a href="#" class="event-mini-btn" data-page="fechas">Ver detalles →</a>
+                    <div class="event-mini-image">
+                        <img src="${event.image}" alt="${event.name}">
+                    </div>
+                    <div class="event-mini-content">
+                        <div class="event-mini-date">${date.weekday} ${date.day} ${date.monthLong}</div>
+                        <div class="event-mini-name">${event.name}</div>
+                        <div class="event-mini-venue">📍 ${event.venue}</div>
+                        <a href="#" class="event-mini-btn" data-event-id="${eventIndex}">Ver detalles →</a>
+                    </div>
                 `;
                 container.appendChild(card);
+            });
+
+            // Agregar event listeners a los botones "Ver detalles"
+            document.querySelectorAll('.event-mini-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const eventId = btn.getAttribute('data-event-id');
+                    switchPage('fechas');
+                    setTimeout(() => {
+                        const eventCard = document.getElementById(`event-${eventId}`);
+                        if (eventCard) {
+                            eventCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            eventCard.classList.add('highlight');
+                            setTimeout(() => {
+                                eventCard.classList.remove('highlight');
+                            }, 3000);
+                        }
+                    }, 300);
+                });
             });
         }
 
@@ -1358,18 +1436,22 @@
                 const date = formatDate(event.date);
                 const statusInfo = getStatusInfo(event.status);
                 const isSoldout = event.status === 'soldout';
+                const originalIndex = eventos.indexOf(event);
 
                 const card = document.createElement('div');
                 card.className = 'event-card fade-up';
+                card.id = `event-${originalIndex}`;
                 card.style.transitionDelay = `${index * 0.08}s`;
                 card.innerHTML = `
-                    <div class="event-date-box">
-                        <div class="event-date-day">${date.day}</div>
-                        <div class="event-date-month">${date.month}</div>
-                        <div class="event-date-year">${date.year}</div>
+                    <div class="event-image">
+                        <img src="${event.image}" alt="${event.name}">
                     </div>
                     <div class="event-info">
                         <span class="event-status ${statusInfo.class}">${statusInfo.label}</span>
+                        <div class="event-date-inline">
+                            <span class="date-number">${date.day}</span>
+                            <span>${date.month} ${date.year}</span>
+                        </div>
                         <h3 class="event-name">${event.name}</h3>
                         <div class="event-venue">📍 ${event.venue} • ${event.city}</div>
                         <div class="event-lineup">
