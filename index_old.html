@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ladrillo Disco</title>
+    <style>
+        /* =========================================
+           VARIABLES & RESET
+        ========================================= */
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #d4ff00;
+            --accent-alt: #ff0055;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --transition: cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; outline: none; }
+
+        /* =========================================
+           UTILITIES & ANIMATIONS
+        ========================================= */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.6s var(--transition);
+        }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =========================================
+           NAVBAR
+        ========================================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s var(--transition);
+            background: transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 1rem 5%;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+        .logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active { color: var(--accent); }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s var(--transition);
+        }
+
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* =========================================
+           HERO SECTION
+        ========================================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 255, 0, 0.15) 0%, rgba(5, 5, 5, 0) 70%);
+            z-index: 0;
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+            100% { transform: translateX(-50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 0.9;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
+            display: inline-block;
+            text-shadow: 0 0 20px rgba(212, 255, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: all 0.3s var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px rgba(212, 255, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(212, 255, 0, 0.6);
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent);
+        }
+
+        /* =========================================
+           MARQUEE
+        ========================================= */
+        .marquee-container {
+            overflow: hidden;
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 1rem 0;
+            border-top: 1px solid var(--bg-primary);
+            border-bottom: 1px solid var(--bg-primary);
+            margin: 4rem 0;
+        }
+
+        .marquee-content {
+            display: flex;
+            width: max-content;
+            animation: scroll 20s linear infinite;
+        }
+
+        .marquee-content span {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            white-space: nowrap;
+            padding: 0 2rem;
+            letter-spacing: 2px;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* =========================================
+           SECTIONS GENERAL
+        ========================================= */
+        section {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .section-tag {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 1rem auto 0;
+            font-size: 1.05rem;
+        }
+
+        /* =========================================
+           EVENTOS - PREVIEW (HOME)
+        ========================================= */
+        .events-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .event-mini {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s var(--transition);
+            position: relative;
+            overflow: hidden;
+            align-items: center;
+        }
+
+        .event-mini::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s var(--transition);
+        }
+
+        .event-mini:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .event-mini:hover::before {
+            transform: scaleY(1);
+        }
+
+        .event-mini-image {
+            width: 100%;
+            aspect-ratio: 9/19;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .event-mini-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s var(--transition);
+        }
+
+        .event-mini:hover .event-mini-image img {
+            transform: scale(1.05);
+        }
+
+        .event-mini-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .event-mini-date {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .event-mini-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .event-mini-venue {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .event-mini-btn {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+            cursor: pointer;
+        }
+
+        .view-all-events {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* =========================================
+           EVENTOS - FULL PAGE
+        ========================================= */
+        .events-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .event-card {
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s var(--transition);
+            position: relative;
+            overflow: hidden;
+            scroll-margin-top: 100px;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(212, 255, 0, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s var(--transition);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(212, 255, 0, 0.15);
+        }
+
+        .event-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .event-card.highlight {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(212, 255, 0, 0.3);
+        }
+
+        .event-image {
+            width: 100%;
+            aspect-ratio: 9/19;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--transition);
+        }
+
+        .event-card:hover .event-image img {
+            transform: scale(1.08);
+        }
+
+        .event-info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+        }
+
+        .status-available {
+            background: rgba(212, 255, 0, 0.15);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .status-few {
+            background: rgba(255, 165, 0, 0.15);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+        }
+
+        .status-soldout {
+            background: rgba(255, 0, 85, 0.15);
+            color: var(--accent-alt);
+            border: 1px solid var(--accent-alt);
+        }
+
+        .event-date-inline {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-date-inline .date-number {
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .event-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-venue {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-lineup {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .event-dj-tag {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .event-card:hover .event-dj-tag {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .event-action {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.8rem;
+        }
+
+        .event-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-align: right;
+        }
+
+        .event-price small {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-tickets {
+            padding: 0.8rem 1.8rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            transition: all 0.3s var(--transition);
+            white-space: nowrap;
+        }
+
+        .btn-tickets:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(212, 255, 0, 0.5);
+        }
+
+        .btn-tickets.disabled {
+            background: var(--glass);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* =========================================
+           PLAYLIST SECTION
+        ========================================= */
+        .playlist-section {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a1a1a 100%);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin: 4rem auto;
+            max-width: 1400px;
+        }
+
+        .playlist-section::before {
+            content: '🥷🏼';
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 4rem;
+            opacity: 0.1;
+        }
+
+        .playlist-section::after {
+            content: '🥷🏼';
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            font-size: 4rem;
+            opacity: 0.1;
+        }
+
+        .playlist-title {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .playlist-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-playlist {
+            padding: 1rem 3rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            transition: all 0.3s var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-playlist:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 255, 0, 0.5);
+        }
+
+        /* =========================================
+           RRPP MOSAIC GRID
+        ========================================= */
+        .rrpp-grid-mosaic {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .rrpp-card {
+            position: relative;
+            aspect-ratio: 3/4;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: all 0.4s var(--transition);
+            background: var(--bg-secondary);
+        }
+
+        .rrpp-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(212, 255, 0, 0.25);
+        }
+
+        .rrpp-card-link {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .rrpp-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s var(--transition);
+        }
+
+        .rrpp-card:hover .rrpp-card-img {
+            transform: scale(1.1);
+        }
+
+        .rrpp-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.5) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.4s var(--transition);
+        }
+
+        .rrpp-card:hover .rrpp-card-overlay {
+            opacity: 1;
+        }
+
+        .rrpp-card-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            transform: translateY(20px);
+            transition: transform 0.4s var(--transition);
+        }
+
+        .rrpp-card:hover .rrpp-card-name {
+            transform: translateY(0);
+        }
+
+        .rrpp-card-role {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            transform: translateY(20px);
+            transition: transform 0.4s var(--transition) 0.1s;
+        }
+
+        .rrpp-card:hover .rrpp-card-role {
+            transform: translateY(0);
+        }
+
+        .rrpp-card-whatsapp {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 45px;
+            height: 45px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s var(--transition);
+            z-index: 2;
+        }
+
+        .rrpp-card:hover .rrpp-card-whatsapp {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* =========================================
+           TEAM (DJs)
+        ========================================= */
+        .djs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .dj-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s var(--transition);
+            position: relative;
+        }
+
+        .dj-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(212, 255, 0, 0.1);
+        }
+
+        .dj-img {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dj-info {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dj-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .dj-listeners {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* =========================================
+           CONTACTO
+        ========================================= */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            background: var(--bg-secondary);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-detail .icon {
+            width: 40px;
+            height: 40px;
+            background: var(--glass);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+
+        .local-time {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .local-time .time-icon {
+            font-size: 1.5rem;
+        }
+
+        .local-time .time-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .local-time .time-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full { grid-column: 1 / -1; }
+
+        .form-group label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            color: white;
+            font-size: 1rem;
+            transition: border 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 4rem 5% 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+        @media (max-width: 900px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s var(--transition);
+                border-left: 1px solid var(--border);
+            }
+            .nav-links.open { right: 0; }
+            .menu-btn { display: block; z-index: 1001; }
+            
+            .contact-wrapper { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: auto; }
+            
+            .rrpp-grid-mosaic {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 1rem;
+            }
+            
+            .rrpp-card-name { font-size: 1.1rem; }
+            .rrpp-card-role { font-size: 0.7rem; }
+            .rrpp-card-whatsapp { width: 35px; height: 35px; }
+
+            .event-card {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .event-image {
+                max-width: 200px;
+                margin: 0 auto;
+            }
+
+            .event-action { align-items: center; }
+            .event-name { font-size: 1.4rem; }
+            .event-lineup { justify-content: center; }
+            .event-price { text-align: center; }
+
+            .event-mini {
+                grid-template-columns: 100px 1fr;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .event-mini-name { font-size: 1rem; }
+            .event-mini-date { font-size: 0.7rem; }
+
+            .playlist-section { padding: 3rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <a href="#" class="logo" data-page="inicio">Ladrillo <span>Disco</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" class="nav-link active" data-page="inicio">Inicio</a></li>
+            <li><a href="#" class="nav-link" data-page="fechas">Fechas</a></li>
+            <li><a href="#" class="nav-link" data-page="team">Team</a></li>
+            <li><a href="#" class="nav-link" data-page="contacto">Contacto</a></li>
+        </ul>
+        <button class="menu-btn" id="menuBtn">☰</button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- PAGE: INICIO -->
+        <div id="inicio" class="page active">
+            <section class="hero">
+                <div class="hero-content fade-up">
+                    <h1>El Gigante <br><span class="highlight">100% Unico</span></h1>
+                    <p>Del portal de la Patagonia</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary" data-page="fechas">🎟️ Ver Eventos</a>
+                        <a href="#" class="btn btn-secondary" data-page="team">Nuestros DJS</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Marquee -->
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <span>Los Clásicos Nunca Mueren •</span>
+                    <span>Unite a @ladrillodisco •</span>
+                    <span>Nuestra Comunidad •</span>
+                    <span>Ladrillo Disco •</span>
+                    <span>Los Clásicos Nunca Mueren •</span>
+                    <span>Unite a @ladrillodisco •</span>
+                    <span>Nuestra Comunidad •</span>
+                    <span>Ladrillo Disco •</span>
+                </div>
+            </div>
+
+            <!-- PRÓXIMOS EVENTOS PREVIEW -->
+            <section id="events-preview">
+                <div class="section-header fade-up">
+                    <span class="section-tag">Próximos Eventos</span>
+                    <h2 class="section-title">Próximos Eventos</h2>
+                    <p class="section-subtitle">Somos el primer club nocturno en crear eventos en los que sólo suena RKT. Contamos con el aval de los máximos exponentes del género y con una comunidad que nos acompaña a todas partes. Los artistas más destacados de la industria forman parte de nuestro equipo.</p>
+                </div>
+                <div class="events-preview" id="eventsPreview"></div>
+                <div class="view-all-events fade-up">
+                    <a href="#" class="btn btn-secondary" data-page="fechas">Ver Todas las Fechas →</a>
+                </div>
+            </section>
+
+            <!-- RRPP MOSAIC Section -->
+            <section id="rrpp">
+                <div class="section-header fade-up">
+                    <span class="section-tag">RRPP Oficiales</span>
+                    <h2 class="section-title">Nuestro Equipo</h2>
+                </div>
+                <div class="rrpp-grid-mosaic"></div>
+            </section>
+
+            <!-- PLAYLIST SECTION -->
+            <section id="playlist">
+                <div class="playlist-section fade-up">
+                    <h2 class="playlist-title">Las mejores playlists de RKT 🥷🏼</h2>
+                    <p class="playlist-subtitle">Escuchá los temas que suenan en todas nuestras noches</p>
+                    <a href="https://open.spotify.com" target="_blank" class="btn-playlist">
+                        ▶ ESCUCHAR
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE: FECHAS -->
+        <div id="fechas" class="page">
+            <section style="padding-top: 8rem;">
+                <div class="section-header fade-up">
+                    <span class="section-tag">Agenda</span>
+                    <h2 class="section-title">Próximos Eventos</h2>
+                    <p class="section-subtitle">Somos el primer club nocturno en crear eventos en los que sólo suena RKT. Contamos con el aval de los máximos exponentes del género y con una comunidad que nos acompaña a todas partes. Los artistas más destacados de la industria forman parte de nuestro equipo.</p>
+                </div>
+                <div class="events-grid" id="eventsGrid"></div>
+            </section>
+        </div>
+
+        <!-- PAGE: TEAM -->
+        <div id="team" class="page">
+            <section style="padding-top: 8rem;">
+                <div class="section-header fade-up">
+                    <span class="section-tag">El Equipo</span>
+                    <h2 class="section-title">Nuestros DJS</h2>
+                </div>
+                <div class="djs-grid"></div>
+            </section>
+        </div>
+
+        <!-- PAGE: CONTACTO -->
+        <div id="contacto" class="page">
+            <section style="padding-top: 8rem;">
+                <div class="section-header fade-up">
+                    <span class="section-tag">Hablemos</span>
+                    <h2 class="section-title">Traé a Ladrillo a tu ciudad</h2>
+                </div>
+                <div class="contact-wrapper fade-up">
+                    <div class="contact-info">
+                        <h3>Contacto</h3>
+                        <p>¿Querés Comunicarte con LADRILLO? Completa el formulario y nos pondremos en contacto en menos de 48hs.</p>
+                        
+                        <div class="contact-detail">
+                            <div class="icon">✉</div>
+                            <div>
+                                <strong>Email</strong><br>
+                                <a href="mailto:info@ladrillodisco.com.ar">info@ladrillodisco.com.ar</a>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="icon">📍</div>
+                            <div>
+                                <strong>Locación</strong><br>
+                                Realicó, La Pampa, Argentina
+                            </div>
+                        </div>
+
+                        <!-- Reloj Hora Local -->
+                        <div class="local-time">
+                            <div class="time-icon">🕐</div>
+                            <div>
+                                <div class="time-label">Hora local</div>
+                                <div class="time-value" id="localTime">--:--:--</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="form-grid" onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label>Fecha del Evento</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Horario del Evento</label>
+                            <input type="time" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Venue</label>
+                            <input type="text" placeholder="Nombre del lugar" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Edad del Evento</label>
+                            <input type="text" placeholder="Ej: +18" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Dirección</label>
+                            <input type="text" placeholder="Calle, número, ciudad" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre de Contacto</label>
+                            <input type="text" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Celular de Contacto</label>
+                            <input type="tel" placeholder="+54 9 11..." required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Email de Contacto</label>
+                            <input type="email" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Mensaje</label>
+                            <textarea placeholder="Contanos más sobre tu evento..."></textarea>
+                        </div>
+                        <div class="form-group full">
+                            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Enviar Solicitud</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">Ladrillo <span>Disco</span></div>
+            <div class="footer-links">
+                <a href="#" data-page="inicio">Inicio</a>
+                <a href="#" data-page="fechas">Fechas</a>
+                <a href="#" data-page="team">Team</a>
+                <a href="#" data-page="contacto">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>UNITE A LADRILLO DISCO • NUESTRA COMUNIDAD • LOS CLASICOS NUNCA MUEREN</p>
+            <p style="margin-top: 1rem;">© 2026 Ladrillo Disco. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // =========================================
+        // DATA: EVENTOS
+        // =========================================
+        const eventos = [
+            {
+                name: "Ladrillo University Fest",
+                date: "2026-07-11",
+                venue: "Ladrillo Disco",
+                city: "Realicó, La Pampa",
+                lineup: ["Luis", "Lucas", "Mateo", "Reymon"],
+                price: "$8",
+                priceLabel: "Anticipada",
+                status: "available",
+                ticketUrl: "#",
+                image: "eventos/university.jpeg"
+            },
+            {
+                name: "RKT Night Vol. 2",
+                date: "2026-07-25",
+                venue: "Club Mandarine",
+                city: "Santa Rosa",
+                lineup: ["Adri Fuentes", "Sossa", "Tomi Remix"],
+                price: "$10.000",
+                priceLabel: "General",
+                status: "few",
+                ticketUrl: "#",
+                image: "eventos/rkt-night-2.jpg"
+            },
+            {
+                name: "Los Clásicos Nunca Mueren",
+                date: "2026-08-01",
+                venue: "Teatro Vorterix",
+                city: "Buenos Aires",
+                lineup: ["Dura DJ", "Matt Sebastian", "Ventu DJ", "Los anormales"],
+                price: "$12.000",
+                priceLabel: "Platea",
+                status: "available",
+                ticketUrl: "#",
+                image: "eventos/clasicos.jpg"
+            },
+            {
+                name: "Noche de Barrio",
+                date: "2026-08-08",
+                venue: "Nikito Bar",
+                city: "General Pico",
+                lineup: ["Juanma Girat", "Juana Vincent", "Eze Remix"],
+                price: "$7.000",
+                priceLabel: "Anticipada",
+                status: "available",
+                ticketUrl: "#",
+                image: "eventos/noche-barrio.jpg"
+            },
+            {
+                name: "El Gigante - 100% Único",
+                date: "2026-08-15",
+                venue: "Ladrillo Disco",
+                city: "Realicó, La Pampa",
+                lineup: ["DJ Feed", "Tibbas", "Gnabry", "Sossa", "Adri Fuentes"],
+                price: "$15.000",
+                priceLabel: "Campo",
+                status: "few",
+                ticketUrl: "#",
+                image: "eventos/gigante.jpg"
+            },
+            {
+                name: "RKT Festival 2026",
+                date: "2026-06-20",
+                venue: "Hipódromo de Palermo",
+                city: "Buenos Aires",
+                lineup: ["Todos los DJS"],
+                price: "$20.000",
+                priceLabel: "General",
+                status: "soldout",
+                ticketUrl: "#",
+                image: "eventos/festival.jpg"
+            }
+        ];
+
+        // =========================================
+        // HELPERS: FECHAS
+        // =========================================
+        const meses = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+        const mesesLargos = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+        function formatDate(dateStr) {
+            const d = new Date(dateStr + 'T00:00:00');
+            return {
+                day: d.getDate(),
+                month: meses[d.getMonth()],
+                monthLong: mesesLargos[d.getMonth()],
+                year: d.getFullYear(),
+                weekday: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'][d.getDay()]
+            };
+        }
+
+        function getStatusInfo(status) {
+            const statuses = {
+                available: { class: 'status-available', label: '🟢 Disponible' },
+                few: { class: 'status-few', label: '🟠 Pocas Entradas' },
+                soldout: { class: 'status-soldout', label: '🔴 Agotado' }
+            };
+            return statuses[status] || statuses.available;
+        }
+
+        // =========================================
+        // RENDER: EVENTOS PREVIEW (HOME)
+        // =========================================
+        function renderEventsPreview() {
+            const container = document.getElementById('eventsPreview');
+            const upcoming = eventos
+                .filter(e => e.status !== 'soldout')
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .slice(0, 3);
+
+            upcoming.forEach((event, index) => {
+                const date = formatDate(event.date);
+                const eventIndex = eventos.indexOf(event);
+                const card = document.createElement('div');
+                card.className = 'event-mini fade-up';
+                card.style.transitionDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="event-mini-image">
+                        <img src="${event.image}" alt="${event.name}">
+                    </div>
+                    <div class="event-mini-content">
+                        <div class="event-mini-date">${date.weekday} ${date.day} ${date.monthLong}</div>
+                        <div class="event-mini-name">${event.name}</div>
+                        <div class="event-mini-venue">📍 ${event.venue}</div>
+                        <a href="#" class="event-mini-btn" data-event-id="${eventIndex}">Ver detalles →</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Agregar event listeners a los botones "Ver detalles"
+            document.querySelectorAll('.event-mini-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const eventId = btn.getAttribute('data-event-id');
+                    switchPage('fechas');
+                    setTimeout(() => {
+                        const eventCard = document.getElementById(`event-${eventId}`);
+                        if (eventCard) {
+                            eventCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            eventCard.classList.add('highlight');
+                            setTimeout(() => {
+                                eventCard.classList.remove('highlight');
+                            }, 3000);
+                        }
+                    }, 300);
+                });
+            });
+        }
+
+        // =========================================
+        // RENDER: EVENTOS FULL (PÁGINA FECHAS)
+        // =========================================
+        function renderEventsFull() {
+            const container = document.getElementById('eventsGrid');
+            const sorted = [...eventos].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            sorted.forEach((event, index) => {
+                const date = formatDate(event.date);
+                const statusInfo = getStatusInfo(event.status);
+                const isSoldout = event.status === 'soldout';
+                const originalIndex = eventos.indexOf(event);
+
+                const card = document.createElement('div');
+                card.className = 'event-card fade-up';
+                card.id = `event-${originalIndex}`;
+                card.style.transitionDelay = `${index * 0.08}s`;
+                card.innerHTML = `
+                    <div class="event-image">
+                        <img src="${event.image}" alt="${event.name}">
+                    </div>
+                    <div class="event-info">
+                        <span class="event-status ${statusInfo.class}">${statusInfo.label}</span>
+                        <div class="event-date-inline">
+                            <span class="date-number">${date.day}</span>
+                            <span>${date.month} ${date.year}</span>
+                        </div>
+                        <h3 class="event-name">${event.name}</h3>
+                        <div class="event-venue">📍 ${event.venue} • ${event.city}</div>
+                        <div class="event-lineup">
+                            ${event.lineup.map(dj => `<span class="event-dj-tag">${dj}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <div class="event-price">
+                            ${event.price}
+                            <small>${event.priceLabel}</small>
+                        </div>
+                        <a href="${event.ticketUrl}" class="btn-tickets ${isSoldout ? 'disabled' : ''}">
+                            ${isSoldout ? 'Agotado' : 'Comprar Entradas'}
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // =========================================
+        // DATA: RRPPs
+        // =========================================
+        const rrpps = [
+            { name: "Ramón Zapata", number: "5491123456789", role: "RRPP Senior", photo: "fotos/reymon.jpg" },
+            { name: "Lucas Martínez", number: "5491123456790", role: "Zona Norte" },
+            { name: "Sofía Rodríguez", number: "5491123456791", role: "Zona Sur" },
+            { name: "Mateo González", number: "5491123456792", role: "Zona Oeste" },
+            { name: "Valentina López", number: "5491123456793", role: "Zona Centro" },
+            { name: "Tomás Fernández", number: "5491123456794", role: "Capital" },
+            { name: "Martina Sánchez", number: "5491123456795", role: "GBA" },
+            { name: "Benjamín Torres", number: "5491123456796", role: "Interior" },
+            { name: "Emilia Ramírez", number: "5491123456797", role: "Eventos" },
+            { name: "Santiago Cruz", number: "5491123456798", role: "VIP" },
+            { name: "Isabella Morales", number: "5491123456799", role: "Mesas" },
+            { name: "Maximiliano Ruiz", number: "5491123456800", role: "General" }
+        ];
+
+        // =========================================
+        // RENDER: RRPPs
+        // =========================================
+        function renderRRPPs() {
+            const rrppGrid = document.querySelector('.rrpp-grid-mosaic');
+            rrpps.forEach((rrpp, index) => {
+                const card = document.createElement('div');
+                card.className = 'rrpp-card fade-up';
+                card.style.transitionDelay = `${index * 0.05}s`;
+                
+                const imageUrl = rrpp.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(rrpp.name)}&background=111111&color=d4ff00&size=400&bold=true`;
+                const waMessage = encodeURIComponent(`Hola ${rrpp.name} quisiera una ANTI`);
+                
+                card.innerHTML = `
+                    <a href="https://wa.me/${rrpp.number}?text=${waMessage}" target="_blank" class="rrpp-card-link">
+                        <img src="${imageUrl}" alt="${rrpp.name}" class="rrpp-card-img">
+                        <div class="rrpp-card-overlay">
+                            <div class="rrpp-card-role">${rrpp.role}</div>
+                            <div class="rrpp-card-name">${rrpp.name}</div>
+                        </div>
+                        <div class="rrpp-card-whatsapp" title="Contactar por WhatsApp">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                        </div>
+                    </a>
+                `;
+                
+                rrppGrid.appendChild(card);
+            });
+        }
+
+        // =========================================
+        // DATA: DJs
+        // =========================================
+        const djs = [
+            "Adri Fuentes", "DJ Feed", "Dura DJ", "Eze Greco", "Eze Remix", 
+            "Gnabry", "Joaquin Arce", "Juanma Girat", "Juana Vincent", "Los anormales", 
+            "Matt Sebastian", "Sossa", "Tibbas", "Tomi Remix", "Ventu DJ"
+        ];
+
+        // =========================================
+        // RENDER: DJs
+        // =========================================
+        function renderDJs() {
+            const djsGrid = document.querySelector('.djs-grid');
+            djs.forEach((dj, index) => {
+                const initials = dj.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                const card = document.createElement('div');
+                card.className = 'dj-card fade-up';
+                card.style.transitionDelay = `${index * 0.05}s`;
+                card.innerHTML = `
+                    <div class="dj-img">${initials}</div>
+                    <div class="dj-info">
+                        <span class="dj-name">${dj}</span>
+                        <span class="dj-listeners">+${Math.floor(Math.random() * 900 + 100)}K</span>
+                    </div>
+                `;
+                djsGrid.appendChild(card);
+            });
+        }
+
+        // =========================================
+        // RELOJ HORA LOCAL (Argentina)
+        // =========================================
+        function updateLocalTime() {
+            const now = new Date();
+            const options = { 
+                timeZone: 'America/Argentina/Buenos_Aires',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const timeStr = now.toLocaleTimeString('es-AR', options);
+            const timeElement = document.getElementById('localTime');
+            if (timeElement) {
+                timeElement.textContent = timeStr;
+            }
+        }
+
+        // =========================================
+        // ROUTING (SPA)
+        // =========================================
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('[data-page]');
+
+        function switchPage(pageId) {
+            pages.forEach(page => {
+                page.classList.remove('active');
+                if (page.id === pageId) {
+                    page.classList.add('active');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(observeElements, 100);
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = link.getAttribute('data-page');
+                switchPage(targetPage);
+                document.getElementById('navLinks').classList.remove('open');
+            });
+        });
+
+        // =========================================
+        // NAVBAR SCROLL EFFECT
+        // =========================================
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // =========================================
+        // MOBILE MENU
+        // =========================================
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        // =========================================
+        // SCROLL ANIMATIONS
+        // =========================================
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-up').forEach(el => {
+                if (!el.classList.contains('visible')) {
+                    observer.observe(el);
+                }
+            });
+        }
+
+        // =========================================
+        // FORM HANDLER
+        // =========================================
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerText = 'Enviando...';
+            btn.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                btn.innerText = '¡Enviado con éxito! ✅';
+                btn.style.background = '#28a745';
+                btn.style.opacity = '1';
+                e.target.reset();
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = '';
+                }, 3000);
+            }, 1500);
+        }
+
+        // =========================================
+        // INIT
+        // =========================================
+        renderEventsPreview();
+        renderEventsFull();
+        renderRRPPs();
+        renderDJs();
+        observeElements();
+        updateLocalTime();
+        setInterval(updateLocalTime, 1000);
+    </script>
+</body>
+</html>
