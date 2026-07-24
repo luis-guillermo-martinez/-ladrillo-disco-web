@@ -151,6 +151,7 @@
             overflow: hidden;
         }
 
+        /* BACKGROUND IMAGE */
         .hero-bg {
             position: absolute;
             top: 0;
@@ -168,6 +169,7 @@
             object-position: center;
         }
 
+        /* OVERLAY OSCURO */
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -183,6 +185,7 @@
             z-index: 1;
         }
 
+        /* EFECTO DE GRADIENTE RADIAL ADICIONAL */
         .hero::before {
             content: '';
             position: absolute;
@@ -696,7 +699,7 @@
         }
 
         .playlist-section::after {
-            content: '🥷';
+            content: '🥷🏼';
             position: absolute;
             bottom: 2rem;
             left: 2rem;
@@ -718,17 +721,24 @@
             font-size: 1.1rem;
         }
 
-        .spotify-embed {
-            max-width: 800px;
-            margin: 2rem auto 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        .btn-playlist {
+            padding: 1rem 3rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            transition: all 0.3s var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
         }
 
-        .spotify-embed iframe {
-            border-radius: 12px;
-            width: 100%;
+        .btn-playlist:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 255, 0, 0.5);
         }
 
         /* =========================================
@@ -1108,10 +1118,6 @@
             .event-mini-date { font-size: 0.7rem; }
 
             .playlist-section { padding: 3rem 1.5rem; }
-            
-            .spotify-embed {
-                margin: 1.5rem auto 0;
-            }
         }
     </style>
 </head>
@@ -1134,20 +1140,29 @@
         <!-- PAGE: INICIO -->
         <div id="inicio" class="page active">
             <section class="hero">
+                <!-- BACKGROUND IMAGE/VIDEO -->
                 <div class="hero-bg">
+                    <!-- OPCIÓN 1: IMAGEN DE FONDO -->
+                    <!-- <img src="fondos/hero-bg.jpg" alt="Background">-->
+                    
+                    <!-- OPCIÓN 2: VIDEO DE FONDO (descomentar y comentar la imagen) -->
+                    
                     <video autoplay muted loop playsinline>
-                        <source src="fondos/hero-bg.mp4" type="video/mp4">
+                        <source src="fondos/probando2.mp4" type="video/mp4">
                         Tu navegador no soporta videos HTML5
                     </video>
+                    
                 </div>
                 
+                <!-- OVERLAY OSCURO -->
                 <div class="hero-overlay"></div>
                 
+                <!-- CONTENIDO -->
                 <div class="hero-content fade-up">
                     <h1>El Gigante <br><span class="highlight">100% Unico</span></h1>
                     <p>Del portal de la Patagonia</p>
                     <div class="btn-group">
-                        <a href="#" class="btn btn-primary" data-page="fechas">🎟️ Ver Eventos</a>
+                        <a href="#" class="btn btn-primary" data-page="fechas">️ Ver Eventos</a>
                         <a href="#" class="btn btn-secondary" data-page="team">Nuestros DJS</a>
                     </div>
                 </div>
@@ -1192,21 +1207,11 @@
             <!-- PLAYLIST SECTION -->
             <section id="playlist">
                 <div class="playlist-section fade-up">
-                    <h2 class="playlist-title">Las mejores playlists de Ladrillo Disco 🥷</h2>
+                    <h2 class="playlist-title">Las mejores playlists de Ladrillo Disco 🥷🏼</h2>
                     <p class="playlist-subtitle">Escuchá los temas que suenan en todas nuestras noches</p>
-                    
-                    <div class="spotify-embed">
-                        <iframe 
-                            style="border-radius:12px" 
-                            src="https://open.spotify.com/embed/playlist/2QkW2b7u6KEDyP8aaW20Iw?utm_source=generator" 
-                            width="100%" 
-                            height="352" 
-                            frameBorder="0" 
-                            allowfullscreen="" 
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                            loading="lazy">
-                        </iframe>
-                    </div>
+                    <a href="https://open.spotify.com/embed/playlist/2QkW2b7u6KEDyP8aaW20Iw?utm_source=generator&si=d08fe56f4b1448c2" target="_blank" class="btn-playlist">
+                        ▶ ESCUCHAR
+                    </a>
                 </div>
             </section>
         </div>
@@ -1261,6 +1266,7 @@
                             </div>
                         </div>
 
+                        <!-- Reloj Hora Local -->
                         <div class="local-time">
                             <div class="time-icon">🕐</div>
                             <div>
@@ -1329,7 +1335,7 @@
         </div>
         <div class="footer-bottom">
             <p>UNITE A LADRILLO DISCO • NUESTRA COMUNIDAD • LOS CLASICOS NUNCA MUEREN</p>
-            <p style="margin-top: 1rem;">© 2026 Ladrillo Disco. Todos los derechos reservados.</p>
+            <p style="margin-top: 1rem;">© 2026 Luis G. Martinez. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -1339,16 +1345,16 @@
         // =========================================
         const eventos = [
             {
-                name: "Ladrillo - Edición Patagonia",
-                date: "2026-07-18",
+                name: "Ladrillo University Fest",
+                date: "2026-07-11",
                 venue: "Ladrillo Disco",
                 city: "Realicó, La Pampa",
-                lineup: ["DJ Feed", "Tibbas", "Eze Greco", "Gnabry"],
-                price: "$8.000",
+                lineup: ["Luis", "Lucas", "Mateo", "Reymon"],
+                price: "$8",
                 priceLabel: "Anticipada",
                 status: "available",
                 ticketUrl: "#",
-                image: "eventos/edicion-patagonia.jpg"
+                image: "eventos/university.jpeg"
             },
             {
                 name: "RKT Night Vol. 2",
@@ -1431,8 +1437,8 @@
 
         function getStatusInfo(status) {
             const statuses = {
-                available: { class: 'status-available', label: ' Disponible' },
-                few: { class: 'status-few', label: ' Pocas Entradas' },
+                available: { class: 'status-available', label: '🟢 Disponible' },
+                few: { class: 'status-few', label: '🟠 Pocas Entradas' },
                 soldout: { class: 'status-soldout', label: '🔴 Agotado' }
             };
             return statuses[status] || statuses.available;
@@ -1461,13 +1467,14 @@
                     <div class="event-mini-content">
                         <div class="event-mini-date">${date.weekday} ${date.day} ${date.monthLong}</div>
                         <div class="event-mini-name">${event.name}</div>
-                        <div class="event-mini-venue">📍 ${event.venue}</div>
+                        <div class="event-mini-venue"> ${event.venue}</div>
                         <a href="#" class="event-mini-btn" data-event-id="${eventIndex}">Ver detalles →</a>
                     </div>
                 `;
                 container.appendChild(card);
             });
 
+            // Agregar event listeners a los botones "Ver detalles"
             document.querySelectorAll('.event-mini-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -1504,3 +1511,236 @@
                 card.className = 'event-card fade-up';
                 card.id = `event-${originalIndex}`;
                 card.style.transitionDelay = `${index * 0.08}s`;
+                card.innerHTML = `
+                    <div class="event-image">
+                        <img src="${event.image}" alt="${event.name}">
+                    </div>
+                    <div class="event-info">
+                        <span class="event-status ${statusInfo.class}">${statusInfo.label}</span>
+                        <div class="event-date-inline">
+                            <span class="date-number">${date.day}</span>
+                            <span>${date.month} ${date.year}</span>
+                        </div>
+                        <h3 class="event-name">${event.name}</h3>
+                        <div class="event-venue">📍 ${event.venue} • ${event.city}</div>
+                        <div class="event-lineup">
+                            ${event.lineup.map(dj => `<span class="event-dj-tag">${dj}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <div class="event-price">
+                            ${event.price}
+                            <small>${event.priceLabel}</small>
+                        </div>
+                        <a href="${event.ticketUrl}" class="btn-tickets ${isSoldout ? 'disabled' : ''}">
+                            ${isSoldout ? 'Agotado' : 'Comprar Entradas'}
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // =========================================
+        // DATA: RRPPs
+        // =========================================
+        const rrpps = [
+            { name: "Marianela Ayala", number: "5492996110561", role: "Realicó", photo: "fotos/m_ayala.jpeg" },
+            { name: "Ambar Coronel", number: "5492302611197", role: "Realicó" , photo: "fotos/a_coronel.jpeg"},
+            { name: "Luciana Ayala", number: "5492302233984", role: "Realicó" , photo: "fotos/l_ayala.jpeg" },
+            { name: "Ignacio Roggero", number: "5492302463357", role: "Realicó" , photo: "fotos/i_roggero.jpeg" },
+            { name: "Sol Burron", number: "5492302487472",role: "Realicó" , photo: "fotos/s_burron.jpeg" },
+            { name: "Tomás Merelo", number: "5492302601127", role: "Realicó" , photo: "fotos/t_merelo.jpeg" },
+            { name: "Agustina Bustamante", number: "5492302211056", role: "Realicó" , photo: "fotos/a_bustamante.jpeg" },
+            
+        ];
+
+        // =========================================
+        // RENDER: RRPPs
+        // =========================================
+        function renderRRPPs() {
+            const rrppGrid = document.querySelector('.rrpp-grid-mosaic');
+            rrpps.forEach((rrpp, index) => {
+                const card = document.createElement('div');
+                card.className = 'rrpp-card fade-up';
+                card.style.transitionDelay = `${index * 0.05}s`;
+                
+                const imageUrl = rrpp.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(rrpp.name)}&background=111111&color=d4ff00&size=400&bold=true`;
+                const waMessage = encodeURIComponent(`Hola ${rrpp.name} quisiera una ANTI`);
+                
+                card.innerHTML = `
+                    <a href="https://wa.me/${rrpp.number}?text=${waMessage}" target="_blank" class="rrpp-card-link">
+                        <img src="${imageUrl}" alt="${rrpp.name}" class="rrpp-card-img">
+                        <div class="rrpp-card-overlay">
+                            <div class="rrpp-card-role">${rrpp.role}</div>
+                            <div class="rrpp-card-name">${rrpp.name}</div>
+                        </div>
+                        <div class="rrpp-card-whatsapp" title="Contactar por WhatsApp">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                        </div>
+                    </a>
+                `;
+                
+                rrppGrid.appendChild(card);
+            });
+        }
+
+        // =========================================
+        // DATA: DJs
+        // =========================================
+        const djs = [
+            "Adri Fuentes", "DJ Feed", "Dura DJ", "Eze Greco", "Eze Remix", 
+            "Gnabry", "Joaquin Arce", "Juanma Girat", "Juana Vincent", "Los anormales", 
+            "Matt Sebastian", "Sossa", "Tibbas", "Tomi Remix", "Ventu DJ"
+        ];
+
+        // =========================================
+        // RENDER: DJs
+        // =========================================
+        function renderDJs() {
+            const djsGrid = document.querySelector('.djs-grid');
+            djs.forEach((dj, index) => {
+                const initials = dj.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                const card = document.createElement('div');
+                card.className = 'dj-card fade-up';
+                card.style.transitionDelay = `${index * 0.05}s`;
+                card.innerHTML = `
+                    <div class="dj-img">${initials}</div>
+                    <div class="dj-info">
+                        <span class="dj-name">${dj}</span>
+                        <span class="dj-listeners">+${Math.floor(Math.random() * 900 + 100)}K</span>
+                    </div>
+                `;
+                djsGrid.appendChild(card);
+            });
+        }
+
+        // =========================================
+        // RELOJ HORA LOCAL (Argentina)
+        // =========================================
+        function updateLocalTime() {
+            const now = new Date();
+            const options = { 
+                timeZone: 'America/Argentina/Buenos_Aires',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const timeStr = now.toLocaleTimeString('es-AR', options);
+            const timeElement = document.getElementById('localTime');
+            if (timeElement) {
+                timeElement.textContent = timeStr;
+            }
+        }
+
+        // =========================================
+        // ROUTING (SPA)
+        // =========================================
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('[data-page]');
+
+        function switchPage(pageId) {
+            pages.forEach(page => {
+                page.classList.remove('active');
+                if (page.id === pageId) {
+                    page.classList.add('active');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(observeElements, 100);
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = link.getAttribute('data-page');
+                switchPage(targetPage);
+                document.getElementById('navLinks').classList.remove('open');
+            });
+        });
+
+        // =========================================
+        // NAVBAR SCROLL EFFECT
+        // =========================================
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // =========================================
+        // MOBILE MENU
+        // =========================================
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        // =========================================
+        // SCROLL ANIMATIONS
+        // =========================================
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-up').forEach(el => {
+                if (!el.classList.contains('visible')) {
+                    observer.observe(el);
+                }
+            });
+        }
+
+        // =========================================
+        // FORM HANDLER
+        // =========================================
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerText = 'Enviando...';
+            btn.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                btn.innerText = '¡Enviado con éxito! ✅';
+                btn.style.background = '#28a745';
+                btn.style.opacity = '1';
+                e.target.reset();
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = '';
+                }, 3000);
+            }, 1500);
+        }
+
+        // =========================================
+        // INIT
+        // =========================================
+        renderEventsPreview();
+        renderEventsFull();
+        renderRRPPs();
+        renderDJs();
+        observeElements();
+        updateLocalTime();
+        setInterval(updateLocalTime, 1000);
+    </script>
+</body>
+</html>
